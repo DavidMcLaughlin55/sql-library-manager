@@ -1,22 +1,22 @@
-var express = require('express');
-var router = express.Router();
-const Book = require('../models').Book;
+const express = require('express');
+const router = express.Router();
+const { Book } = require('../models');
 
+/* Handler function to wrap each route. */
 function asyncHandler(cb) {
   return async (req, res, next) => {
     try {
-      await cb(req, res, next);
+      await cb(req, res, next)
     } catch (error) {
-      //Send to global error handler
+      // Forward error to the global error handler
       next(error);
     };
   };
 };
 
-/* GET home page. */
+/* GET home page. Home route should redirect to the /books route*/
 router.get('/', asyncHandler(async (req, res) => {
-
-  res.render('index',);
+  res.redirect('/books');
 }));
 
 module.exports = router;
