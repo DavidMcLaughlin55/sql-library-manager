@@ -8,6 +8,7 @@ const createError = require('http-errors');
 const indexRouter = require('./routes/index');
 const bookRouter = require('./routes/books');
 const newBookRouter = require('./routes/new-book');
+const updateBookRouter = require('./routes/update-book');
 
 
 const app = express();
@@ -24,8 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/books', bookRouter);
-app.use('/new-book', newBookRouter);
-
+app.use('/books/new', newBookRouter);
+app.use('/books/update', updateBookRouter);
 
 //Error Handlers
 app.use((req, res, next) => {
