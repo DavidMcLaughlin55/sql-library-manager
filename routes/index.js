@@ -6,7 +6,7 @@ const { Book } = require('../models');
 function asyncHandler(cb) {
   return async (req, res, next) => {
     try {
-      await cb(req, res, next)
+      await cb(req, res, next);
     } catch (error) {
       // Forward error to the global error handler
       next(error);
@@ -14,7 +14,7 @@ function asyncHandler(cb) {
   };
 };
 
-/* GET home page. Home route should redirect to the /books route*/
+// Redirects to books list homepage
 router.get('/', asyncHandler(async (req, res) => {
   res.redirect('/books');
 }));

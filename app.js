@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/books', bookRouter);
 app.use('/books/new', newBookRouter);
-app.use('/books/update', updateBookRouter);
+app.use('/books', updateBookRouter);
 
 //Error Handlers
 app.use((req, res, next) => {

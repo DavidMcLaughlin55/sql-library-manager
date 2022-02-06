@@ -15,7 +15,8 @@ block content
     tbody
       each id in books
         tr
-          td #{id.title} 
+          td
+            a(href=`/books/${id.id}`) #{id.title} 
           td #{id.author}
           td #{id.genre}
           td #{id.year}
