@@ -16,7 +16,7 @@ function asyncHandler(cb) {
 
 // Redirects to books list homepage
 router.get('/', asyncHandler(async (req, res) => {
-  res.redirect('/books');
+  res.redirect('books');
 }));
 
 module.exports = router;

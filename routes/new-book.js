@@ -15,15 +15,28 @@ function asyncHandler(cb) {
 };
 
 // Shows the create new book form
-router.get('/', (req, res) => {
+router.get('/new', (req, res) => {
     res.render('new-book', { book: {} });
 });
 
 // Posts a new book to the database
-router.post('/', asyncHandler(async (req, res) => {
-    const book = await Book.create(req.body);
-    console.log(req.body);
-    res.redirect('/');
+router.post('/new', asyncHandler(async (req, res) => {
+    let book;
+    try {
+        book = await Book.create(req.body);
+        if (book) {
+            res.redirect('/');
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (error) {
+        if (error.name === 'SequelizeValidationError') {
+            book = await Book.build(req.body);
+            res.render('new-book', { book, errors: error.errors })
+        } else {
+            throw error;
+        }
+    };
 }));
 
 module.exports = router;

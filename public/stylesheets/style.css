@@ -1,10 +1,10 @@
 body {
   padding: 10px 50px 50px;
-  font: 18px "Garamond", serif;
+  font: 18px 'Ubuntu Condensed', sans-serif;
 }
 
 a {
-  color: #019875;
+  color: #3D52D5;
   text-decoration: none;
   font-weight: bold;
   transition: 0.4s;
@@ -16,7 +16,7 @@ a {
 
 a.button, input[type=submit] {
   color: white;
-  background: #019875;
+  background: #3D52D5;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   padding: 10px 14px 12px;
   font-size: 14px;
@@ -34,7 +34,7 @@ input[type=submit] {
 }
 
   a.button:hover, input[type=submit]:hover {
-    background-color: #01b189;
+    background-color: #5564c2;
   }
 
 p {
@@ -51,6 +51,10 @@ ul {
 h2 {
   border-top: 2px solid #e7e7e7;
   padding-top: 20px;
+}
+
+table {
+  font-size: 24px;
 }
 
 th {
@@ -72,6 +76,7 @@ td {
 }
 
 label {
+  font-size: 24px;
   font-weight: bold;
   min-width: 130px;
   display: inline-block;
@@ -93,5 +98,6 @@ input[type=text] {
 }
 
 .error {
-  color: rgb(236, 15, 15);
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #F72C25;
 }

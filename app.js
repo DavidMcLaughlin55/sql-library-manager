@@ -25,26 +25,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/books', bookRouter);
-app.use('/books/new', newBookRouter);
+app.use('/books', newBookRouter);
 app.use('/books', updateBookRouter);
 
-//Error Handlers
+// Catches 404 and forwards to error handler
 app.use((req, res, next) => {
-    const err = new Error();
-    err.status = 404;
-    err.message = "Oh no! It looks like something went wrong.";
-    next(err);
+    next(createError(404));
 });
 
+// Error Handler
 app.use((err, req, res, next) => {
+    // Set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // Renders the error page based on status
+    res.status(err.status || 500);
     if (err.status === 404) {
-        res.status = 404;
         res.render('page-not-found', err);
     } else {
-        err.message = err.message;
-        err.status = 500;
         res.render('error', err);
-    };
+    }
 });
 
 module.exports = app;
