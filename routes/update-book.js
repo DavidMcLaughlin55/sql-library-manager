@@ -2,30 +2,30 @@ const express = require('express');
 const router = express.Router();
 const { Book } = require('../models');
 
-/* Handler function to wrap each route. */
+// Handler function to wrap each route.
 function asyncHandler(cb) {
     return async (req, res, next) => {
         try {
             await cb(req, res, next)
         } catch (error) {
-            // Forward error to the global error handler
+            // Forward error to the global error handler.
             next(error);
         };
     };
 };
 
-// Shows book update form
-router.get('/books/:id', asyncHandler(async (req, res) => {
+// Shows book update form.
+router.get('/books/:id', asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
         res.render('update-book', { book });
     } else {
-        res.sendStatus(404);
+        next();
     };
 }));
 
-// Updates book info in the database
-router.post('/books/:id', asyncHandler(async (req, res) => {
+// Updates book info in the database.
+router.post('/books/:id', asyncHandler(async (req, res, next) => {
     let book;
     try {
         book = await Book.findByPk(req.params.id);
@@ -33,7 +33,7 @@ router.post('/books/:id', asyncHandler(async (req, res) => {
             await book.update(req.body);
             res.redirect('/');
         } else {
-            res.sendStatus(404);
+            next();
         };
     } catch (error) {
         if (error.name === 'SequelizeValidationError') {
@@ -47,13 +47,13 @@ router.post('/books/:id', asyncHandler(async (req, res) => {
 }));
 
 // Deletes book. THIS CAN'T BE UNDONE!
-router.post('/books/:id/delete', asyncHandler(async (req, res) => {
+router.post('/books/:id/delete', asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
         await book.destroy();
         res.redirect(`/`);
     } else {
-        res.sendStatus(404);
+        next();
     };
 }));
 
