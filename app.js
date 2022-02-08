@@ -1,4 +1,3 @@
-// var createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -6,10 +5,9 @@ const logger = require('morgan');
 const createError = require('http-errors');
 
 const indexRouter = require('./routes/index');
-const bookRouter = require('./routes/books');
+const booksRouter = require('./routes/books');
 const newBookRouter = require('./routes/new-book');
 const updateBookRouter = require('./routes/update-book');
-
 
 const app = express();
 
@@ -24,28 +22,26 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/books', bookRouter);
-app.use('/books', newBookRouter);
-app.use('/books', updateBookRouter);
+app.use('/', booksRouter);
+app.use('/', newBookRouter);
+app.use('/', updateBookRouter);
 
-// Catches 404 and forwards to error handler
+// Catch 404 and forward to error handler
 app.use((req, res, next) => {
     next(createError(404));
 });
 
-// Error Handler
+// // Global Error Handler
 app.use((err, req, res, next) => {
-    // Set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    // Renders the error page based on status
-    res.status(err.status || 500);
     if (err.status === 404) {
-        res.render('page-not-found', err);
+        err.status = 404;
+        err.message = `Sorry! We couldn't find the page you were looking for.`;
+        res.render('page-not-found', { err });
     } else {
-        res.render('error', err);
-    }
+        err.status = 500;
+        err.message = 'Sorry! There was an unexpected error on the server.';
+        res.render('error', { err });
+    };
 });
 
 module.exports = app;

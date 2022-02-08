@@ -6,7 +6,7 @@ const { Book } = require('../models');
 function asyncHandler(cb) {
     return async (req, res, next) => {
         try {
-            await cb(req, res, next);
+            await cb(req, res, next)
         } catch (error) {
             // Forward error to the global error handler
             next(error);
@@ -15,12 +15,12 @@ function asyncHandler(cb) {
 };
 
 // Shows the create new book form
-router.get('/new', (req, res) => {
+router.get('/books/new', (req, res) => {
     res.render('new-book', { book: {} });
 });
 
 // Posts a new book to the database
-router.post('/new', asyncHandler(async (req, res) => {
+router.post('/books/new', asyncHandler(async (req, res) => {
     let book;
     try {
         book = await Book.create(req.body);
@@ -28,14 +28,14 @@ router.post('/new', asyncHandler(async (req, res) => {
             res.redirect('/');
         } else {
             res.sendStatus(404);
-        }
+        };
     } catch (error) {
         if (error.name === 'SequelizeValidationError') {
             book = await Book.build(req.body);
-            res.render('new-book', { book, errors: error.errors })
+            res.render('new-book', { book, errors: error.errors });
         } else {
             throw error;
-        }
+        };
     };
 }));
 

@@ -1,5 +1,6 @@
-extends layout
+extends layout 
 
-block content
-  h1 Error 500: Unknown Error
-  h2 It looks like something went wrong.
+block content 
+  h1 Error #{err.status}
+  h2= err.message
+

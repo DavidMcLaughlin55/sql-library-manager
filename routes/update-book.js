@@ -6,7 +6,7 @@ const { Book } = require('../models');
 function asyncHandler(cb) {
     return async (req, res, next) => {
         try {
-            await cb(req, res, next);
+            await cb(req, res, next)
         } catch (error) {
             // Forward error to the global error handler
             next(error);
@@ -15,7 +15,7 @@ function asyncHandler(cb) {
 };
 
 // Shows book update form
-router.get('/:id', asyncHandler(async (req, res) => {
+router.get('/books/:id', asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
         res.render('update-book', { book });
@@ -25,7 +25,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
 }));
 
 // Updates book info in the database
-router.post('/:id', asyncHandler(async (req, res) => {
+router.post('/books/:id', asyncHandler(async (req, res) => {
     let book;
     try {
         book = await Book.findByPk(req.params.id);
@@ -47,7 +47,7 @@ router.post('/:id', asyncHandler(async (req, res) => {
 }));
 
 // Deletes book. THIS CAN'T BE UNDONE!
-router.post('/:id/delete', asyncHandler(async (req, res) => {
+router.post('/books/:id/delete', asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
         await book.destroy();

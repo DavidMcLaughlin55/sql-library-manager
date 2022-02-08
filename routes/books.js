@@ -15,13 +15,13 @@ function asyncHandler(cb) {
 };
 
 // Shows the full list of books
-router.get('/', asyncHandler(async (req, res) => {
+router.get('/books', asyncHandler(async (req, res) => {
     const books = await Book.findAll();
     if (books) {
         res.render('index', { books });
     } else {
         res.sendStatus(404);
-    }
+    };
 }));
 
 module.exports = router;
